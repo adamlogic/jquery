@@ -1066,6 +1066,20 @@ test("empty()", function() {
 	equals( j.html(), "", "Check node,textnode,comment empty works" );
 });
 
+test("jQuery.clean", function() {
+	var fragment = document.createDocumentFragment(),
+			clean    = function(html) { return jQuery.clean( [html], document, fragment, [] )};
+	
+	equals( clean('<div>').length, 1,                  'Cleaning a standalone unclosed div element' );
+	equals( clean('<div id="foo">').length, 1,         'Cleaning an unclosed div element with attribute' );
+	equals( clean('<div id="foo" />').length, 1,       'Cleaning a self-closing div element with attribute' );
+	equals( clean('<div id="foo"></div>').length, 1,   'Cleaning a div element with attribute and closing element' );
+	equals( clean('<span>').length, 1,                 'Cleaning a standalone unclosed span element' );
+	equals( clean('<span id="foo">').length, 1,        'Cleaning an unclosed span element with attribute' );
+	equals( clean('<span id="foo" />').length, 1,      'Cleaning a self-closing span element with attribute' );
+	equals( clean('<span id="foo"></span>').length, 1, 'Cleaning a span element with attribute and closing element' );
+});
+
 test("jQuery.cleanData", function() {
 	expect(14);
 	
